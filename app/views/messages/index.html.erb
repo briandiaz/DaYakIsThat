@@ -1,0 +1,48 @@
+<div class="row">
+  <div class="col-md-10 col-md-offset-1">
+    <ul class="timeline">
+      
+      <% 
+      index = 1
+      @yak_messages.each do |yak| %>
+      <li <%= (index % 2 == 0) ? "class=\"timeline-inverted\"".html_safe : "" %>>
+        <div class="timeline-badge <%= MessageHelper::View.get_likes_color(yak['numberOfLikes']) %>"><%= yak["numberOfLikes"] %></div>
+          <div class="timeline-panel">
+            <div class="timeline-heading">
+              <div class="row">
+                <div class="col-md-4">
+                  <% if yak["handle"]%><h3 class="timeline-title"><%= yak["handle"] %></h3><% end %>
+                </div>
+                <div class="col-md-8">
+                  <small class="pull-right"><i class="glyphicon glyphicon-time"></i> <span data-livestamp="<%= DateTime.parse(yak['time']).to_time.to_i %>"></span> - <%= DateTime.parse(yak['time']).strftime("%m/%d/%Y %H:%M") %></small>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="yak-message">
+                    <a href="/yak/<%= yak['messageID'][2..100] %>"><p><%= yak["message"] %></p></a>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+            <div class="timeline-body">
+              <div class="btn-group pull-right">
+                <% if yak["handle"]%><a href="#" class="btn btn-link btn-md"><i class="glyphicon glyphicon-user"></i> <%= yak["handle"] %></a><% end %>
+                <a href="/yak/<%= yak['messageID'][2..100] %>" class="btn btn-link btn-md"><i class="glyphicon glyphicon-comment"></i> <%= yak["comments"] %></a>
+              </div>
+            </div>
+            <div class="pull-left">
+              <a class="btn btn-sm btn-info"><i class="glyphicon glyphicon-thumbs-up"></i></a>
+              <a class="btn btn-sm btn-danger"><i class="glyphicon glyphicon-thumbs-down"></i></a>
+            </div>
+        </div>
+      </li>
+      <% 
+        index += 1
+      end 
+      %>
+      
+    </ul>
+  </div>
+</div>

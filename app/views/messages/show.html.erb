@@ -1,0 +1,52 @@
+<div class="row">
+  <div class="col-md-10 col-md-offset-1">
+    <div class="jumbotron">
+    <h1><%= @yak_message["message"] %></h1>
+    <p>
+      <div class="btn-group">
+        <a class="btn btn-md btn-link btn-thumbs-up"><i class="glyphicon glyphicon-thumbs-up"></i></a>
+                <a class="btn btn-md btn-link btn-thumbs-down"><i class="glyphicon glyphicon-thumbs-down"></i></a>
+        </div>
+        </p>
+    </div>
+  </div>
+</div>
+    
+<div class="row">
+    
+  <div class="col-md-10 col-md-offset-1">
+    
+    <ul class="timeline">
+      
+      <% 
+      index = 1
+showed = false
+@yak_comments.each do |yak| %>
+      <li <%= (index % 2 == 0) ? "class=\"timeline-inverted\"".html_safe : "" %>
+        <%= (index % 10 == 0 and !showed) ? 'id="jscroll-yaks"'.html_safe : "" %>>
+        <div class="timeline-badge <%= MessageHelper::View.get_likes_color(yak['numberOfLikes']) %>"><%= yak["numberOfLikes"] %></div>
+          <div class="timeline-panel">
+            <div class="timeline-heading">
+              <% if yak["handle"]%><h3 class="timeline-title"><%= yak["handle"] %></h3><% end %>
+              <a href="/yak/<%= yak['messageID'][2..100] %>"><p class="yak-message"><%= yak["comment"] %></p></a>
+            </div>
+            <div class="timeline-body">
+              <a class="btn btn-md btn-link btn-thumbs-up"><i class="glyphicon glyphicon-thumbs-up"></i></a>
+              <a class="btn btn-md btn-link btn-thumbs-down"><i class="glyphicon glyphicon-thumbs-down"></i></a>
+            </div>
+        </div>
+      </li>
+      <%if index % 10 == 0 %>
+      <li>        
+              <a href="#" class="jscroll-next btn btn-sm btn-success">Cargar más Yaks</a>
+      </li>
+      <%end%>
+      <% 
+      index += 1
+    showed = true
+      end 
+      %>
+      
+    </ul>
+  </div>
+</div>

@@ -1,0 +1,18 @@
+<div class="timeline-badge <%= MessageHelper::View.get_likes_color(@yak['numberOfLikes']) %>"><%= @yak["numberOfLikes"] %></div>
+  <div class="timeline-panel">
+    <div class="timeline-heading">
+      <% if @yak["handle"]%><h3 class="timeline-title"><%= @yak["handle"] %></h3><% end %>
+      <a href="/yak/<%= @yak['messageID'][2..100] %>"><p class="yak-message"><%= @yak["message"] %></p></a>
+
+    </div>
+    <div class="timeline-body">
+      <div class="btn-group pull-right">
+        <% if @yak["handle"]%><a href="#" class="btn btn-link btn-md"><i class="glyphicon glyphicon-user"></i> <%= @yak["handle"] %></a><% end %>
+        <a href="/yak/<%= @yak['messageID'][2..100] %>" class="btn btn-link btn-md"><i class="glyphicon glyphicon-comment"></i> <%= @yak["comments"] %></a>
+      </div>
+    </div>
+    <div class="pull-left">
+      <a class="btn btn-md btn-primary"><i class="glyphicon glyphicon-thumbs-up"></i></a>
+      <a class="btn btn-md btn-danger"><i class="glyphicon glyphicon-thumbs-down"></i></a>
+    </div>
+</div>

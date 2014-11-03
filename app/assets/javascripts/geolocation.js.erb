@@ -1,0 +1,64 @@
+
+$(function() {
+  
+  // Geolocation.
+  var isGeolocated = false;
+
+  function geolocationErrorHandler(err) {
+    if(err.code == 1) {
+      alert("Error: Access is denied!");
+    }else if( err.code == 2) {
+      alert("Error: Position is unavailable!");
+    }
+  }
+
+  function geolocateClient(){
+    var options = {timeout:6000000};
+    var watchID ;
+    if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(showPosition);
+          /*var geolocationNavigator = navigator.geolocation;
+          watchID = geolocationNavigator.watchPosition(showLocation, 
+                                               geolocationErrorHandler,
+                                               options);
+          geolocationNavigator.clearWatch(watchID);*/
+      } else {
+          alert("Geolocation is not supported by this browser.");
+      }
+
+  }
+  
+  function showPosition(position) {
+    var _ctk = $("meta[name=csrf-token]"); 
+    var _cp = $("meta[name=csrf-param]"); 
+    var _atk = _ctk.attr("content");
+    $.ajax({
+      type: "GET",
+      url: "/set_lat_long",
+      data: {
+        latitude: position.coords.latitude,
+        longitude: position.coords.longitude
+      },
+      dataType: "json",
+      statusCode: {
+        200: function(data) {
+          window.location.assign("/");
+        },
+        500: function(xhr, textStatus, errorThrown) {
+          
+        },
+        402: function(xhr, textStatus, errorThrown) {
+          
+        },
+        400: function(xhr, textStatus, errorThrown) {
+          console.log("no hay nada");
+        },
+        406: function(xhr, textStatus, errorThrown) {
+          
+        }
+      }
+    });
+  
+}
+  geolocateClient();
+})
