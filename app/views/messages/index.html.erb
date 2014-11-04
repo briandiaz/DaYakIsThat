@@ -33,8 +33,8 @@
               </div>
             </div>
             <div class="pull-left">
-              <a class="btn btn-sm btn-info"><i class="glyphicon glyphicon-thumbs-up"></i></a>
-              <a class="btn btn-sm btn-danger"><i class="glyphicon glyphicon-thumbs-down"></i></a>
+              <a class="btn btn-sm btn-info btn-upvote-yak"  <%= MessageHelper::View.is_disabled(yak) %> data-type="message" data-yak="<%= yak['messageID'][2..100] %>"><i class="glyphicon glyphicon-thumbs-up"></i></a>
+              <a class="btn btn-sm btn-danger btn-downvote-yak" <%= MessageHelper::View.is_disabled(yak) %> data-type="message" data-yak="<%= yak['messageID'][2..100] %>"><i class="glyphicon glyphicon-thumbs-down"></i></a>
             </div>
         </div>
       </li>

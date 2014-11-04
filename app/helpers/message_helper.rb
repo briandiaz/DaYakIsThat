@@ -19,46 +19,84 @@ module MessageHelper
     def self.message_url
       URI.parse(self.get_api_url("getMessage"))
     end
+    
     def self.messages_url
       URI.parse(self.get_api_url("getMessages"))
     end
+    
     def self.comment_url
       URI.parse(self.get_api_url("getComment"))
     end
+    
     def self.comments_url
       URI.parse(self.get_api_url("getComments"))
-    end    
+    end   
+    
+    def self.upvote_yak
+      URI.parse(self.get_api_url("likeMessage"))
+    end
+    
+    def self.downvote_yak
+      URI.parse(self.get_api_url("downvoteMessage"))
+    end
+    
+    def self.upvote_comment
+      URI.parse(self.get_api_url("likeComment"))
+    end
+    
+    def self.upvote_comment
+      URI.parse(self.get_api_url("downvoteComment"))
+    end
   end
   
   module YikYak
     include YikYakApi
     
+    def post(url,params)
+      url.query = URI.encode_www_form( params )
+      url.open.read
+    end
+    
+    def get(url,params)
+      url.query = URI.encode_www_form( params )
+      JSON.parse(url.open.read)
+    end
+    
     def get_messages
-      uri = YikYakApi.messages_url
       latitude = (session[:latitude]) ? session[:latitude] : "19.7974859"
       longitude = (session[:longitude]) ? session[:longitude] : "-70.6844876"
       puts "#{latitude} #{longitude}"
       params = {:userID=>YikYakApi.user_id,:userLat=>latitude,:userLong=>longitude}
-      uri.query = URI.encode_www_form( params )
-      JSON.parse(uri.open.read)["messages"] rescue []
+      data = get(YikYakApi.messages_url,params)
+      data["messages"] rescue []
     end
     
     def get_message(messageID)
       uri = YikYakApi.message_url
       params = {:userID=>YikYakApi.user_id,:messageID=>"R/#{messageID}"}
-      uri.query = URI.encode_www_form( params )
-      JSON.parse(uri.open.read)["messages"][0] rescue []
+      data = get(YikYakApi.message_url,params)
+      data["messages"].first rescue []
     end
         
     def get_comments(messageID)
-      uri = YikYakApi.comments_url
       params = {:userID=>YikYakApi.user_id,:messageID=>"R/#{messageID}"}
-      uri.query = URI.encode_www_form( params )
-      comment_ids = JSON.parse(uri.open.read)["comments"]
+      data = get(YikYakApi.comments_url,params)
+      data["comments"] rescue []
+    end
+    
+    def yak_action messageID, action
+      params = {:messageID=>"R/#{messageID}"}
+      get(action,params) rescue []
     end
     
   end
+  
   module View
+    
+    def self.is_disabled(yak)
+      'disabled="disabled"'.html_safe if yak['liked'] != 0
+    end
+    
     def self.get_likes_color(likes)
       case likes.to_i
         when 0 then "info"
@@ -69,5 +107,9 @@ module MessageHelper
       end
       rescue "danger"
     end
+          
+          
+            
+          
   end
 end
