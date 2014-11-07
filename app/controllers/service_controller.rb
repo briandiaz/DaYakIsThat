@@ -1,15 +1,15 @@
 class ServiceController < ApplicationController
   before_action :set_yak, only: [:upvote,:downvote]
-  include MessageHelper::YikYak
+  include YikYak::API
   
   def upvote
-    yak_action(@yak_id, YikYakApi.upvote_yak) if @type == "message"
-    yak_action(@yak_id, YikYakApi.upvote_comment) if @type == "comment"
+    @yak = yak_action(@yak_id, Assets.upvote_yak) if @type == "message"
+    @yak = yak_action(@yak_id, Assets.upvote_comment) if @type == "comment"
   end
 
   def downvote
-    yak_action(@yak_id, YikYakApi.downvote_yak) if @type == "message"
-    yak_action(@yak_id, YikYakApi.downvote_comment) if @type == "comment"
+    @yak = yak_action(@yak_id, Assets.downvote_yak) if @type == "message"
+    @yak = yak_action(@yak_id, Assets.downvote_comment) if @type == "comment"
   end
 
   private 

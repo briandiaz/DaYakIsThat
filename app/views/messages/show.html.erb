@@ -1,13 +1,11 @@
 <div class="row">
   <div class="col-md-10 col-md-offset-1">
     <div class="jumbotron">
-    <h1><%= @yak_message["message"] %></h1>
-    <p>
+      <h1><%= @yak_message["message"] %></h1>
       <div class="btn-group">
-        <a class="btn btn-md btn-link btn-thumbs-up"><i class="glyphicon glyphicon-thumbs-up"></i></a>
-                <a class="btn btn-md btn-link btn-thumbs-down"><i class="glyphicon glyphicon-thumbs-down"></i></a>
-        </div>
-        </p>
+        <a class="btn btn-sm btn-info btn-upvote-yak"  <%= MessageHelper::View.is_disabled(@yak_message) %> data-type="message" data-yak="<%= @yak_message['messageID'][2..100] %>"><i class="glyphicon glyphicon-thumbs-up"></i></a>
+        <a class="btn btn-sm btn-danger btn-downvote-yak" <%= MessageHelper::View.is_disabled(@yak_message) %> data-type="message" data-yak="<%= @yak_message['messageID'][2..100] %>"><i class="glyphicon glyphicon-thumbs-down"></i></a>
+      </div>
     </div>
   </div>
 </div>

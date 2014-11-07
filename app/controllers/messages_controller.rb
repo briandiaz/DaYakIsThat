@@ -1,5 +1,5 @@
 class MessagesController < ApplicationController
-  include MessageHelper::YikYak
+  include YikYak::API
   include MessageHelper::View
   include ApplicationHelper
   before_action :set_yak, only: [:show]
