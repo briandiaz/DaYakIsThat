@@ -13,15 +13,12 @@ $(function() {
   }
 
   function geolocateClient(){
-    var options = {timeout:6000000};
+    var options = {frequency: 60000000 };	
     var watchID ;
     if (navigator.geolocation) {
-          navigator.geolocation.getCurrentPosition(showPosition);
-          /*var geolocationNavigator = navigator.geolocation;
-          //watchID = geolocationNavigator.watchPosition(showLocation, 
-                                               geolocationErrorHandler,
-                                               options);
-          geolocationNavigator.clearWatch(watchID);*/
+          navigator.geolocation.watchPosition(showPosition, 
+                                     geolocationErrorHandler,
+                                     options);
       } else {
           alert("Geolocation is not supported by this browser.");
       }
@@ -60,5 +57,4 @@ $(function() {
     });
   
 }
-  geolocateClient();
 })

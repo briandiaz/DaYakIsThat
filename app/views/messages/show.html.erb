@@ -1,50 +1,49 @@
 <div class="row">
   <div class="col-md-10 col-md-offset-1">
-    <div class="jumbotron">
+  <div class="panel panel-<%= MessageHelper::View.get_likes_color(@yak_message['numberOfLikes']) %>">
+    <div class="panel-heading">
+      <div class="row">
+        <div class="col-md-4">
+          <% if @yak_message["handle"]%><a href="#" class="btn btn-link btn-md"><i class="glyphicon glyphicon-user"></i> <%= @yak_message["handle"] %></a><% end %>
+        </div>
+        <div class="col-md-8">
+                  <small class="pull-right"><a href="/yak/<%= @yak_message['messageID'][2..100] %>" data-toggle="tooltip" data-placement="left" title="<%= MessageHelper::View.convert_date(@yak_message) %>"><i class="glyphicon glyphicon-time"></i> <span data-livestamp="<%= MessageHelper::View.convert_timestamp(@yak_message) %>"></span></a></small>
+        </div>
+      </div>
+    </div>
+    <div class="panel-body">
       <h1><%= @yak_message["message"] %></h1>
-      <div class="btn-group">
-        <a class="btn btn-sm btn-info btn-upvote-yak"  <%= MessageHelper::View.is_disabled(@yak_message) %> data-type="message" data-yak="<%= @yak_message['messageID'][2..100] %>"><i class="glyphicon glyphicon-thumbs-up"></i></a>
-        <a class="btn btn-sm btn-danger btn-downvote-yak" <%= MessageHelper::View.is_disabled(@yak_message) %> data-type="message" data-yak="<%= @yak_message['messageID'][2..100] %>"><i class="glyphicon glyphicon-thumbs-down"></i></a>
+    </div>
+    <div class="panel-footer">
+      <div class="row">
+        <div class="col-md-6 col-sm-6 col-xs-6 col-lg-6">
+          <a class="btn btn-sm btn-info btn-upvote-yak"  <%= MessageHelper::View.is_disabled(@yak_message) %> data-type="message" data-yak="<%= @yak_message['messageID'][2..100] %>"><i class="glyphicon glyphicon-thumbs-up"></i></a>
+          <a class="btn btn-sm btn-danger btn-downvote-yak" <%= MessageHelper::View.is_disabled(@yak_message) %> data-type="message" data-yak="<%= @yak_message['messageID'][2..100] %>"><i class="glyphicon glyphicon-thumbs-down"></i></a>
+        </div>
+        <div class="col-md-6 col-sm-6 col-xs-6 col-lg-6">
+          <label class="pull-right"><i class="<%= MessageHelper::View.glyphicon_thumbs(@yak_message['numberOfLikes']) %>"></i> <%= @yak_message["numberOfLikes"] %></label>
+        </div>
       </div>
     </div>
   </div>
-</div>
-    
+</div>  
 <div class="row">
     
   <div class="col-md-10 col-md-offset-1">
-    
+<% if @yak_comments.count > 0 %>    
     <ul class="timeline">
       
       <% 
       index = 1
-showed = false
 @yak_comments.each do |yak| %>
-      <li <%= (index % 2 == 0) ? "class=\"timeline-inverted\"".html_safe : "" %>
-        <%= (index % 10 == 0 and !showed) ? 'id="jscroll-yaks"'.html_safe : "" %>>
-        <div class="timeline-badge <%= MessageHelper::View.get_likes_color(yak['numberOfLikes']) %>"><%= yak["numberOfLikes"] %></div>
-          <div class="timeline-panel">
-            <div class="timeline-heading">
-              <% if yak["handle"]%><h3 class="timeline-title"><%= yak["handle"] %></h3><% end %>
-              <a href="/yak/<%= yak['messageID'][2..100] %>"><p class="yak-message"><%= yak["comment"] %></p></a>
-            </div>
-            <div class="timeline-body">
-              <a class="btn btn-md btn-link btn-thumbs-up"><i class="glyphicon glyphicon-thumbs-up"></i></a>
-              <a class="btn btn-md btn-link btn-thumbs-down"><i class="glyphicon glyphicon-thumbs-down"></i></a>
-            </div>
-        </div>
-      </li>
-      <%if index % 10 == 0 %>
-      <li>        
-              <a href="#" class="jscroll-next btn btn-sm btn-success">Cargar más Yaks</a>
-      </li>
-      <%end%>
+      <li <%= (index % 2 == 0) ? "class=\"timeline-inverted\"".html_safe : "" %>>
+<%= render :partial => "messages/yak", :locals=>{:yak => yak, :type => "comment"}  %>      
       <% 
       index += 1
-    showed = true
       end 
       %>
       
     </ul>
+    <% end %>
   </div>
 </div>

@@ -12,6 +12,10 @@ class MessagesController < ApplicationController
     @yak_messages = get_messages()
   end
   
+  def my_tops
+    @yak_messages = get_my_tops()
+  end
+  
   def set_client_lat_long
     set_latitude_longitude(params[:latitude],params[:longitude])
   end

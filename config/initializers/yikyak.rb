@@ -5,7 +5,7 @@ module YikYak
   module Assets
     
     def self.user_id
-       "FCA4E90D-B4A7-468B-8F77-E8E576806C10"
+       "9NR3X8QT-0JBV-UVCK-Q84T-UG1DBNTU8V09"
     end
     
     def self.api_base_url
@@ -14,6 +14,14 @@ module YikYak
 
     def self.get_api_url(action)
       self.api_base_url + action
+    end
+    
+    def self.my_tops_url
+      URI.parse(self.get_api_url("getMyTops"))
+    end
+    
+    def self.register_user_url
+      URI.parse(self.get_api_url("registerUser"))
     end
     
     def self.message_url
@@ -54,12 +62,18 @@ module YikYak
     
     def post(url,params)
       url.query = URI.encode_www_form( params )
-      url.open.read
+      JSON.parse(url.open.read)
     end
     
     def get(url,params)
       url.query = URI.encode_www_form( params )
       JSON.parse(url.open.read)
+    end
+    
+    def get_my_tops
+      params = {:userID=>Assets.user_id}
+      data = get(Assets.my_tops_url,params)
+      data["messages"] rescue []
     end
     
     def get_messages
@@ -81,7 +95,8 @@ module YikYak
     def get_comments(messageID)
       params = {:userID=>Assets.user_id,:messageID=>"R/#{messageID}"}
       data = get(Assets.comments_url,params)
-      data["comments"] rescue []
+      comments_ordered = Hash[data["comments"].to_a.reverse]
+      comments_ordered rescue []
     end
     
     def yak_action messageID, action

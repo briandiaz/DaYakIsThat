@@ -1,5 +1,7 @@
 $(function(){
   
+  $("small a").tooltip();
+  
   $(".btn-upvote-yak").click(function(){
     var yak = $(this).data("yak");
     var type = $(this).data("type");
@@ -15,6 +17,19 @@ $(function(){
     postVoteAjax("downvote",yak,type,currentLikes,$(this));
   });
   
+  $(".btn-embed-responsive-vidme").click(function(){
+    $(this).hide("fast")
+    $(this).next().show("fast");
+    $(this).next().next().show("fast");
+  });
+  
+  
+  $(".btn-embed-responsive-vidme-hide").click(function(){
+    $(this).hide("fast")
+    $(this).next().hide("fast");
+    $(this).prev().show("fast");
+  });
+  
   function buttonBehavior(button, type){
     button.addClass("active");
     if(type == "upvote"){
@@ -26,7 +41,7 @@ $(function(){
     }
   }
   
-  function postVoteAjax(action,type,yak,currentLikes,button){
+  function postVoteAjax(action,yak,type,currentLikes,button){
     var likes = parseInt(currentLikes.html());
     $.ajax({
       type: "POST",

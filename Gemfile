@@ -13,9 +13,6 @@ gem 'coffee-rails', '~> 4.0.0'
 gem 'therubyracer'
 gem 'twitter-bootstrap-rails', :git => 'git://github.com/seyhunak/twitter-bootstrap-rails.git', :branch => 'bootstrap3'
 gem 'momentjs-rails', '~> 2.5.0'
-gem 'bootstrap-datetimepicker-rails'
-gem "rmagick"
-gem "carrierwave"
 gem 'jquery-rails'
 gem 'turbolinks'
 gem 'jbuilder', '~> 1.2'

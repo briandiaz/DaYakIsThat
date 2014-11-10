@@ -6,8 +6,7 @@
       index = 1
       @yak_messages.each do |yak| %>
       <li <%= (index % 2 == 0) ? "class=\"timeline-inverted\"".html_safe : "" %>>
-        
-        <%=render :partial => "messages/yak", :locals=>{:yak => yak, :type => "message"}  %>
+          <%= render :partial => "messages/yak", :locals=>{:yak => yak, :type => "message"}  %>      
       </li>
       <% 
         index += 1

@@ -1,0 +1,40 @@
+<div class="timeline-badge <%= MessageHelper::View.get_likes_color(yak['numberOfLikes']) %>"><%= yak["numberOfLikes"] %></div>
+          <div class="timeline-panel">
+            <div class="timeline-heading">
+              <div class="row">
+                <div class="col-md-4">
+                  <% if yak["handle"]%><h3 class="timeline-title"><%= yak["handle"] %></h3><% end %>
+                </div>
+                <div class="col-md-8">
+                  <small class="pull-right"><a href="/yak/<%= yak['messageID'][2..100] %>" data-toggle="tooltip" data-placement="left" title="<%= MessageHelper::View.convert_date(yak) %>"><i class="glyphicon glyphicon-time"></i> <span data-livestamp="<%= MessageHelper::View.convert_timestamp(yak) %>"></span></a></small>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="yak-message">
+                    <p><%= yak[type] %></p>
+                    <% if MessageHelper::View.contains_vidme(yak[type]) %>
+                    <a class="btn btn-link btn-sm btn-embed-responsive-vidme" ><i class="glyphicon glyphicon-film"></i> Show Video</a>
+                    <a class="btn btn-link btn-sm btn-embed-responsive-vidme-hide" style="display:none"><i class="glyphicon glyphicon-film"></i> Hide Video</a>
+                    <div class="embed-responsive embed-responsive-16by9" style="display:none">
+                      <%= MessageHelper::View.get_iframe_vidme(yak[type]).html_safe %>
+                    </div>
+                    <% end %>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+            <div class="timeline-body">
+              <div class="btn-group pull-right">
+                <% if yak["handle"]%><a href="#" class="btn btn-link btn-md"><i class="glyphicon glyphicon-user"></i> <%= yak["handle"] %></a><% end %>
+                <% if type == "message"%>
+                  <a href="/yak/<%= yak['messageID'][2..100] %>" class="btn btn-link btn-md"><i class="glyphicon glyphicon-comment"></i> <%= yak["comments"] %></a>
+                <% end %>
+              </div>
+            </div>
+            <div class="pull-left">
+              <a class="btn btn-sm btn-info btn-upvote-yak"  <%= MessageHelper::View.is_disabled(yak) %> data-type="message" data-yak="<%= yak['messageID'][2..100] %>"><i class="glyphicon glyphicon-thumbs-up"></i></a>
+              <a class="btn btn-sm btn-danger btn-downvote-yak" <%= MessageHelper::View.is_disabled(yak) %> data-type="message" data-yak="<%= yak['messageID'][2..100] %>"><i class="glyphicon glyphicon-thumbs-down"></i></a>
+            </div>
+        </div>

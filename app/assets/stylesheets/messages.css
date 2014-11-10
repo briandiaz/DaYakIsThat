@@ -1,10 +1,18 @@
+.panel .panel-footer{
+  background: rgba(255,255,255,0.3);
+}
+small a .glyphicon-time, small a span{
+  color: black;
+}
+small a span:hover{
+  text-decoration: none;
+}
 
-/* expanding input CSS only */
 #myInput    	{width:130px}
 #myInput:focus	{width:100%;}
 .yak-message{
-  padding-top: 5%;
-  padding-bottom: 5%;
+  padding-top: 3%;
+  padding-bottom: 3%;
 }
 .yak-message a,.yak-message a:hover{
   text-decoration: none;
@@ -74,7 +82,7 @@ a.btn-thumbs-down,a.btn-thumbs-up{
   float: left;
   border: 1px solid #d4d4d4;
   border-radius: 2px;
-    background-color: rgba(255,255,255,0.8);
+    background-color: rgba(255,255,255,1);
   padding: 20px;
   position: relative;
   -webkit-box-shadow: 0 1px 6px rgba(0, 0, 0, 0.175);
