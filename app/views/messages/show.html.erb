@@ -13,6 +13,13 @@
     </div>
     <div class="panel-body">
       <h1><%= @yak_message["message"] %></h1>
+      <% if MessageHelper::View.contains_vidme(@yak_message["message"]) %>
+      <a class="btn btn-link btn-sm btn-embed-responsive-vidme" ><i class="glyphicon glyphicon-film"></i> Show Video</a>
+      <a class="btn btn-link btn-sm btn-embed-responsive-vidme-hide" style="display:none"><i class="glyphicon glyphicon-film"></i> Hide Video</a>
+      <div class="embed-responsive embed-responsive-16by9" style="display:none">
+        <%= MessageHelper::View.get_iframe_vidme(@yak_message["message"]).html_safe %>
+      </div>
+      <% end %>
     </div>
     <div class="panel-footer">
       <div class="row">
